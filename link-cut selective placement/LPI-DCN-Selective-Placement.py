@@ -16,7 +16,8 @@ import io
 import numpy as np
 
 graph=nx.Graph()
-V=nx.read_gml('./us-ca.gml',destringizer=int)
+# V=nx.read_gml('./us-ca.gml',destringizer=int)
+V = nx.read_gml('./atlanta.gml', destringizer=int)
 N=3
 print('This are the node locations for the selected topology:')
 print(V.nodes(data='name'))
@@ -242,17 +243,20 @@ for i, method in enumerate(methods):
     # Plot the bars
     ax.bar(bar_positions, method_values, width=width, label=method)
 
-#avg_cost_rand=[44.06,44.52,44.56,44.3,43.3,42.66,40]
+avg_cost_rand=[44.06,44.52,44.56,44.3,43.3,42.66,40]
+avg_cost_rand_shardn_atlanta=[44.06, 63.06666667, 66.23333333, 64.53333333, 64.3, 62.46666667, 62.66666667]
 #avg_cost_rand=[48.08,50.32,50.35,52.01,50.47,51.01,50.25,50.42,50.48,50.24,50,50,50]
-avg_cost_rand=[51.41,50.76,53.46,53.022,49.688,54.152,60.432,64.004,61.596,62.714,62.62,61.26,60.666,60.2,60.37,60.224,60,60,60]
+# avg_cost_rand=[51.41,50.76,53.46,53.022,49.688,54.152,60.432,64.004,61.596,62.714,62.62,61.26,60.666,60.2,60.37,60.224,60,60,60]
 ax.plot(x_indexes, avg_cost_rand, color='k', linestyle='--', marker='o', markersize=5, label='Avg cost for arbitrary placement for N')
+ax.plot(x_indexes, avg_cost_rand_shardn_atlanta, color='k', linestyle='--', marker='+', markersize=10, label='Avg cost for sharding of datacenter networks')
 # Customize the graph
 ax.set_xlabel('DCN density')
 ax.set_ylabel('Optimized minimum cost')
-ax.set_title('US-CA graph behaviour for N=3...|V| with c=10 and selective DCN placement')
+ax.set_title('Atlanta graph behaviour for N=3...|V| with c=10 and selective DCN placement')
 ax.set_xticks(x_indexes + width * (num_methods - 1) / 2)
 ax.set_xticklabels(N_values)
-ax.legend()
+ax.legend(loc='lower left')
 
 # Display the graph
+plt.savefig('cost.pdf')
 plt.show()
